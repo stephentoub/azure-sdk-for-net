@@ -8,7 +8,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/tools/Azure.SdkAnalyzers/
+    - sdk/tools/Azure.GeneratorAgent/
 
 pr:
   branches:
@@ -19,13 +19,18 @@ pr:
     - hotfix/*
   paths:
     include:
-    - sdk/tools/Azure.SdkAnalyzers/
+    - sdk/tools/Azure.GeneratorAgent/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: tools/Azure.SdkAnalyzers
+    ServiceDirectory: tools
     ArtifactName: packages
     Artifacts:
-    - name: Azure.SdkAnalyzers
-      safeName: AzureSdkAnalyzers
+    - name: Azure.GeneratorAgent
+      safeName: AzureGeneratorAgent
+    MatrixConfigs:
+    - Name: Generator_Net10_Only
+      Path: sdk/tools/platform-generator-matrix.json
+      Selection: sparse
+      GenerateVMJobs: true
